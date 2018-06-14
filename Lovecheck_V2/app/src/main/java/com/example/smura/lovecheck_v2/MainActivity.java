@@ -11,19 +11,45 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import android.widget.Button;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
     Handler redrawHandler;
     String text = "";
+    private TextView textView;
+    private boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         redrawHandler = new Handler();
+
+        //ボタン設定
+        Button button = findViewById(R.id.POST);
+        textView = findViewById(R.id.MainText);
+        //ボタンをクリックしたときの処理
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // flagがtrueの時
+                if (flag){
+                    textView.setText("Hello");
+
+                    flag = false;
+                }
+                // flagがfalseの時
+                else {
+                    textView.setText("World");
+                    flag = true;
+                }
+            }
+        });
     }
 
+    //画面のどこかでクリックしたときの処理
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         String requesturl = "http://192.168.1.93:3000/";
